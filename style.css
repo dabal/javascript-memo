@@ -1,0 +1,24 @@
+div.memoItem {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    border-style: double;
+    background-color: royalblue;
+    margin: 5px;
+    cursor: pointer;
+}
+
+div.memoItem:hover {
+    background-color: yellow;
+}
+
+div.empty {
+    display: block;
+    visibility: hidden;
+}
+
+img.hidden {
+    width: 100px;
+    height: 100px;
+    visibility: hidden;
+}
