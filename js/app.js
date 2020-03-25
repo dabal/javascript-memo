@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
         "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Whale-icon.png",
         "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Wolf-icon.png"
     ];
-    let memo = new Memo(5, 10, links);
+    let memo = new Memo(4, 4, links);
     memo.buildMemo();
 
 });
@@ -71,11 +71,14 @@ Memo.prototype.onMemoCardClick = function(event) {
 
 Memo.prototype.buildMemo = function() {
     let linkIterator = 0;
+    let sequenceArray = generateArrayOfPairsInRandomOrder((this.rows * this.columns) / 2);
     memo = document.querySelector("div.memo");
+    let imgUrl = "";
     for (let i = 0; i < this.rows; i++) {
         for (let j = 0; j < this.columns; j++) {
+            imgUrl = this.links[sequenceArray[linkIterator]];
             memo.appendChild(new MemoItem("memoItem", "memo_" + i + "_" + j,
-                    this.links[linkIterator], this)
+                    imgUrl, this)
                 .generateMemoCardDiv());
             linkIterator++;
         }
