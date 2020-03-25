@@ -50,8 +50,10 @@ document.addEventListener("DOMContentLoaded", function() {
         "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Whale-icon.png",
         "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Wolf-icon.png"
     ];
-    let memo = new Memo(4, 4, links);
+    let memo = new Memo(2, 2, links);
     memo.buildMemo();
+
+    document.querySelector("#resetClicksButton").addEventListener("click", function() { memo.resetLastClickedElement(memo); });
 
 });
 
@@ -84,6 +86,14 @@ Memo.prototype.buildMemo = function() {
         }
         memo.appendChild(new MemoItem("empty", "", "", this).generateMemoCardDiv());
     }
+}
+
+Memo.prototype.resetLastClickedElement = function(memo) {
+    memo.lastClickedMemoItems.forEach(element => {
+        element.revert();
+
+    });
+    memo.lastClickedMemoItems = [];
 }
 
 var MemoItem = function(class_, id, url, memo) {
@@ -119,7 +129,7 @@ MemoItem.prototype.onMemoCardClick = function(clickedMemoItem) {
         event.target.querySelector(".hidden").style.visibility = "visible";
         //clickedMemoItem.revert();
         if (clickedMemoItem.memo.lastClickedMemoItems.length == 2) {
-            setTimeout(function() { clickedMemoItem.processResult(); }, 3000)
+            setTimeout(function() { clickedMemoItem.processResult(); }, 2000)
         }
     } else {}
 
