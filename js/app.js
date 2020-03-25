@@ -1,12 +1,54 @@
 document.addEventListener("DOMContentLoaded", function() {
-    let memo = new Memo(5, 10);
+    links = ["http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bat-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bear-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Beaver-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bat-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bear-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Beaver-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bat-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bear-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Beaver-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bat-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bear-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Beaver-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bat-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bear-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Beaver-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bat-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bear-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Beaver-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bat-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bear-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Beaver-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bat-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bear-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Beaver-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bat-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bear-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Beaver-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bat-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bear-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Beaver-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bat-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bear-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Beaver-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bat-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bear-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Beaver-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bat-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bear-icon.png",
+        "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Beaver-icon.png"
+    ];
+    let memo = new Memo(5, 10, links);
     memo.buildMemo();
+
 });
 
-var Memo = function(rows, columns) {
+var Memo = function(rows, columns, links) {
     this.rows = rows;
     this.columns = columns;
     lastClickedMemoItem = null;
+    this.links = links; //potem trzeba dodac sprawdzenie czy dlugosc tablicy jest ok
 
 }
 
@@ -17,12 +59,14 @@ Memo.prototype.onMemoCardClick = function(event) {
 
 
 Memo.prototype.buildMemo = function() {
+    let linkIterator = 0;
     memo = document.querySelector("div.memo");
     for (let i = 0; i < this.rows; i++) {
         for (let j = 0; j < this.columns; j++) {
             memo.appendChild(new MemoItem("memoItem", "memo_" + i + "_" + j,
-                    "http://icons.iconarchive.com/icons/dapino/girl-in-a-bunny-suit/256/girl-bunny-question-icon.png", this)
+                    this.links[linkIterator], this)
                 .generateMemoCardDiv());
+            linkIterator++;
         }
         memo.appendChild(new MemoItem("empty", "", "", this).generateMemoCardDiv());
     }
