@@ -50,7 +50,23 @@ document.addEventListener("DOMContentLoaded", function() {
         "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Whale-icon.png",
         "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Wolf-icon.png"
     ];
-    let memo = new Memo(2, 2, links);
+    rows = parseInt(window.location.search.substr(1).split("&")[0].split("=")[1]);
+    columns = parseInt(window.location.search.substr(1).split("&")[1].split("=")[1]);
+
+    if (rows == null || rows < 1) {
+        rows = 4;
+    }
+    if (columns == null || columns < 1) {
+        columns = 4;
+    }
+
+    if (columns * rows % 2 !== 0 || columns * rows > 2 * links.length) {
+        alert("liczba elementów jest nie podzielna przez 2 - potrzebne są pary. Albo podałeś za dużo - moze by maks 50 par");
+        rows = 4;
+        columns = 4;
+    }
+
+    let memo = new Memo(rows, columns, links);
     memo.buildMemo();
 
     document.querySelector("#resetClicksButton").addEventListener("click", function() { memo.resetLastClickedElement(memo); });
