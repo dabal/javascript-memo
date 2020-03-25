@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
 var Memo = function(rows, columns, links) {
     this.rows = rows;
     this.columns = columns;
-    lastClickedMemoItem = null;
+    this.lastClickedMemoItems = [];
     this.links = links; //potem trzeba dodac sprawdzenie czy dlugosc tablicy jest ok
 
 }
@@ -99,22 +99,29 @@ MemoItem.prototype.generateImgForDiv = function() {
 }
 
 MemoItem.prototype.onMemoCardClick = function(clickedMemoItem) {
-    if (clickedMemoItem.memo.lastClickedMemoItem == null) {
-        clickedMemoItem.memo.lastClickedMemoItem = clickedMemoItem;
+    console.log(clickedMemoItem);
+    if (clickedMemoItem.memo.lastClickedMemoItems.length < 2) {
+        clickedMemoItem.memo.lastClickedMemoItems.push(clickedMemoItem);
         event.target.querySelector(".hidden").style.visibility = "visible";
         //clickedMemoItem.revert();
-    } else {
-        event.target.querySelector(".hidden").style.visibility = "visible";
-        setTimeout(() => {}, 5000);
-        if (clickedMemoItem.compare(clickedMemoItem.memo.lastClickedMemoItem)) {
-            clickedMemoItem.disable();
-            clickedMemoItem.memo.lastClickedMemoItem.disable();
-        } else {
-            clickedMemoItem.memo.lastClickedMemoItem.revert();
-            clickedMemoItem.revert();
+        if (clickedMemoItem.memo.lastClickedMemoItems.length == 2) {
+            setTimeout(function() { clickedMemoItem.processResult(); }, 3000)
         }
-        clickedMemoItem.memo.lastClickedMemoItem = null;
+    } else {}
+
+}
+
+MemoItem.prototype.processResult = function() {
+    console.log(this.memo.lastClickedMemoItems[0].url);
+    console.log(this.memo.lastClickedMemoItems[1].url);
+    if (this.memo.lastClickedMemoItems[0].equalsa(this.memo.lastClickedMemoItems[1])) {
+        this.memo.lastClickedMemoItems[0].disable();
+        this.memo.lastClickedMemoItems[1].disable();
+    } else {
+        this.memo.lastClickedMemoItems[0].revert();
+        this.memo.lastClickedMemoItems[1].revert();
     }
+    this.memo.lastClickedMemoItems = [];
 }
 
 MemoItem.prototype.revert = function() {
@@ -127,12 +134,12 @@ MemoItem.prototype.revert = function() {
 }
 
 MemoItem.prototype.disable = function() {
-    document.getElementById(this.id).style.visibility = "hidden";
-    document.getElementById(this.id).style.visibility = "hidden";
     this.revert();
+    document.getElementById(this.id).style.visibility = "hidden";
+
 }
 
-MemoItem.prototype.compare = function(memoItem) {
+MemoItem.prototype.equalsa = function(memoItem) {
     return this.url === memoItem.url;
 }
 
@@ -152,4 +159,11 @@ function generateArrayOfUniqueNumbers(numberOfElements) {
         if (arr.indexOf(r) === -1) arr.push(r);
     }
     return arr;
+}
+
+function pausecomp(millis) {
+    var date = new Date();
+    var curDate = null;
+    do { curDate = new Date(); }
+    while (curDate - date < millis);
 }
