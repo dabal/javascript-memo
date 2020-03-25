@@ -5,41 +5,55 @@ document.addEventListener("DOMContentLoaded", function() {
 
 var Memo = function(rows, columns) {
     this.rows = rows;
-    this.columns = columns
+    this.columns = columns;
+
 }
 
 Memo.prototype.onMemoCardClick = function(event) {
     event.target.querySelector(".hidden").style.visibility = "visible";
-    console.log(event.target.querySelector(".hidden"))
 }
 
-Memo.prototype.generateMemoCardDiv = function(klasa, url, id) {
-    newDiv = document.createElement("div");
-    newDiv.classList.add(klasa);
-    if (klasa == "memoItem") {
-        newDiv.dataset.url = url;
-        newDiv.id = id;
-        newDiv.addEventListener("click", this.onMemoCardClick);
-    }
-    newDiv.appendChild(this.generateImgForDiv("http://icons.iconarchive.com/icons/dapino/girl-in-a-bunny-suit/256/girl-bunny-question-icon.png"));
-    return newDiv;
-}
 
-Memo.prototype.generateImgForDiv = function(url) {
-    img = document.createElement("img");
-    img.src = url;
-    img.classList.add("hidden");
-    return img;
-}
 
 Memo.prototype.buildMemo = function() {
     memo = document.querySelector("div.memo");
     for (let i = 0; i < this.rows; i++) {
         for (let j = 0; j < this.columns; j++) {
-            memo.appendChild(this.generateMemoCardDiv("memoItem", "tekst", "memo_" + i + "_" + j));
+            memo.appendChild(new MemoItem("memoItem", "memo_" + i + "_" + j,
+                    "http://icons.iconarchive.com/icons/dapino/girl-in-a-bunny-suit/256/girl-bunny-question-icon.png")
+                .generateMemoCardDiv());
         }
-        memo.appendChild(this.generateMemoCardDiv("empty", ""));
+        memo.appendChild(new MemoItem("empty", "", "").generateMemoCardDiv());
     }
+}
+
+var MemoItem = function(class_, id, url) {
+    this.class_ = class_;
+    this.id = id;
+    this.url = url;
+}
+
+MemoItem.prototype.generateMemoCardDiv = function() {
+    newDiv = document.createElement("div");
+    newDiv.classList.add(this.class_);
+    if (this.class_ == "memoItem") {
+        newDiv.dataset.url = this.url;
+        newDiv.id = this.id;
+        newDiv.addEventListener("click", this.onMemoCardClick);
+        newDiv.appendChild(this.generateImgForDiv());
+    }
+    return newDiv;
+}
+
+MemoItem.prototype.generateImgForDiv = function() {
+    img = document.createElement("img");
+    img.src = this.url;
+    img.classList.add("hidden");
+    return img;
+}
+
+MemoItem.prototype.onMemoCardClick = function(event) {
+    event.target.querySelector(".hidden").style.visibility = "visible";
 }
 
 function generateArrayOfPairsInRandomOrder(numberOfUniqueElements) {
