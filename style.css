@@ -22,3 +22,7 @@ img.hidden {
     height: 100px;
     visibility: hidden;
 }
+
+div#form {
+    display: inline;
+}

@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+    //images came from http://www.how-to-draw-funny-cartoons.com/
     links = ["http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bat-icon.png",
         "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Bear-icon.png",
         "http://icons.iconarchive.com/icons/martin-berube/square-animal/128/Beaver-icon.png",
